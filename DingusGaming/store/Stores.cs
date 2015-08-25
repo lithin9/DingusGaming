@@ -1,12 +1,15 @@
 using Rocket.API;
 using System.Collections.Generic;
 using Rocket.Unturned.Player;
+using DingusGaming.DingusGaming.helper;
+using DingusGaming.DingusGaming.data;
 
 namespace DingusGaming.Store
 {
     public class Stores
     {
-        static List<Store> stores;
+        private static List<Store> stores;
+        private static DataAccess dataAccessor = DataAccessFactory.getDataAccessor();
 
         public static void init()
         {
@@ -15,8 +18,7 @@ namespace DingusGaming.Store
 
         private static void loadStoreData()
         {
-            //read in the stores data
-            stores = DGPlugin.readFromFile<List<Store>>("stores.xml");
+            stores = dataAccessor.getStores();
         }
 
         public static string listSubstores()

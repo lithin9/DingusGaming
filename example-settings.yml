@@ -1,0 +1,4 @@
+db.type: dynamo
+
+stores.file: DGPlugin_stores.xml
+balances.file: DGPlugin_balances.xml

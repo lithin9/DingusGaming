@@ -1,17 +1,18 @@
 using Steamworks;
-using System.Collections;
 using System.Collections.Generic;
 using Rocket.Unturned;
 using Rocket.Unturned.Events;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
+using DingusGaming.DingusGaming.data;
 
 namespace DingusGaming.Store
 {
     public class Currency
     {
-        static readonly int startingAmount = 50;
-        static Dictionary<string, int> balances;
+        private static readonly int startingAmount = 50;
+        private static Dictionary<string, int> balances;
+        private static DataAccess dataAccessor = DataAccessFactory.getDataAccessor(); 
 
         public static void init()
         {
@@ -23,18 +24,12 @@ namespace DingusGaming.Store
 
         private static void loadBalances()
         {
-            // TODO: Refactor this to service
-            List<DictionaryEntry> temp = DGPlugin.readFromFile<List<DictionaryEntry>>("balances.xml");
-            if (temp != null)
-                balances = DGPlugin.convertToDictionary<string, int>(temp);
-            else
-                balances = new Dictionary<string, int>();
+            balances = dataAccessor.getBalances();
         }
 
         private static void saveBalances()
         {
-            // TODO: Refactor this to service
-            DGPlugin.writeToFile(DGPlugin.convertFromDictionary(balances), "balances.xml");
+            dataAccessor.setBalances(balances);  
         }
 
         private static void registerOnPlayerDeath()
